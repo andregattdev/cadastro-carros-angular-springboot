@@ -1,0 +1,52 @@
+<!-- Menu lateral -->
+<nav class="bg-white border-end vh-100 p-3 d-flex flex-column" style="width: 240px;">
+  <!-- Conteúdo principal da sidebar -->
+  <div class="flex-grow-1">
+    <h5 class="text-primary fw-bold mb-4">Menu</h5>
+
+    <div *ngIf="usuarioLogado" class="sidebar-header mb-4">
+      <h5 class="text-primary">Bem-vindo, {{ usuarioLogado.username }}</h5>
+      <small class="text-muted">Perfil: {{ usuarioLogado.role }}</small>
+    </div>
+
+    <ul class="nav flex-column">
+      <!-- Item: Carros -->
+      <li class="nav-item mb-2">
+        <a class="nav-link text-dark d-flex align-items-center" href="/admin/carros">
+          <i class="fas fa-car me-2 text-primary"></i> Carros
+        </a>
+      </li>
+
+      <!-- Item: Marcas -->
+      <li class="nav-item mb-2">
+        <a class="nav-link text-dark d-flex align-items-center" href="/admin/marcas">
+          <i class="fas fa-tags me-2 text-primary"></i> Marcas
+        </a>
+      </li>
+
+      <!-- Item: Acessórios -->
+      <li class="nav-item mb-2">
+        <a class="nav-link text-dark d-flex align-items-center" href="/admin/acessorios">
+          <i class="fas fa-tools me-2 text-primary"></i> Acessórios
+        </a>
+      </li>
+
+      <!-- Item: Usuários -->
+      <li class="nav-item mb-2">
+        <a class="nav-link text-dark d-flex align-items-center" href="/admin/usuarios">
+          <i class="fas fa-users me-2 text-primary"></i> Usuários
+        </a>
+      </li>
+
+      <!-- Item: Sair -->
+      <li class="nav-item mt-4">
+        <a class="nav-link text-danger d-flex align-items-center" href="/login">
+          <i class="fas fa-sign-out-alt me-2"></i> Sair
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Rodapé fixado no fim da sidebar -->
+  <app-footer></app-footer>
+</nav>

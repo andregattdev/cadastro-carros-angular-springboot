@@ -1,0 +1,62 @@
+import { CommonModule } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
+
+import { Login } from '../../../auth/login';
+import { LoginService } from '../../../auth/login.service';
+
+@Component({
+  selector: 'app-login',
+  standalone: true,
+  imports: [
+    CommonModule,
+    MdbFormsModule,
+    FormsModule,
+  ],
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'] // ✅ corrigido de styleUrl para styleUrls
+})
+export class LoginComponent {
+
+  login: Login = new Login();
+
+  router = inject(Router);
+  loginService = inject(LoginService);
+
+  constructor() {
+    this.loginService.removerToken();
+  }
+
+  logar() {
+    // Validação básica
+    if (!this.login.username || !this.login.password) {
+      console.log('⚠️ Campos obrigatórios não preenchidos.');
+      return;
+    }
+
+    // Tentativa de login
+    this.loginService.logar(this.login).subscribe({
+      next: token => {
+        if (token) {
+         // console.log('✅ Login bem-sucedido. Token recebido:', token);
+          this.loginService.addToken(token);
+
+          const usuario = this.loginService.getUsuarioLogado();
+    if (usuario) {
+      localStorage.setItem('usuario', JSON.stringify(usuario));
+    }
+
+    
+          this.router.navigate(['/admin/carros']);
+        } else {
+          console.log('Credenciais inválidas. Usuario ou senha incorretos!');
+        }
+      },
+      error: erro => {
+       alert('deu erro!');
+      }
+    });
+  }
+}
